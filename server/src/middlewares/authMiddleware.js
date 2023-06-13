@@ -6,7 +6,7 @@ import CustomError from "../utils/CustomError.js";
 
 export const isLogedIn = asyncHandler(async (req,res,next)=>{
     // collecting token from request Body or header (in case of Mobile Users)
-    if (true || req.cookie.token || req.headers.authorization || req.headers.authorization.startsWith("Bearer")){
+    if (req.cookie?.token || req.headers?.authorization || req.headers?.authorization.startsWith("Bearer")){
         var token=(req?.cookie?.token || req.headers?.authorization.split(" ")[1]);
     }
 

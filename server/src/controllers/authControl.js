@@ -25,7 +25,7 @@ export const signUp= asyncHandler(async (req,res)=>{
     }
 
     // Check if user already exist's
-    const userExistance=User.findOne({email})
+    const userExistance=await User.findOne({email})
     if (userExistance){
         throw new CustomError("User Already exists", 500)
     }
@@ -56,16 +56,14 @@ export const signUp= asyncHandler(async (req,res)=>{
 export const logIn= asyncHandler(async (req, res)=>{
     // colect credentials 
     const {email, password }= req.body;
-    
+    console.log(req.body)
     // validation
     if (!email || !password){
         throw new CustomError("Please enter Credentials",403);
     }
-    
-    // Checking if email Matches
     const user =await User.findOne({email}).select("+password")
     
-    if (!user.email){
+    if (!user?.email){
         throw new CustomError("User not found, please signUp!! ", 400)
     }
     
