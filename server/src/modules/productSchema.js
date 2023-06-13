@@ -7,7 +7,7 @@ const ProductSchema = mongoose.Schema({
     name:{
         type:String,
         required:[true,"Name is required"],
-        maxLength:[50,"Name must be less then 50 Chars"],
+        maxLength:[100,"Name must be less then 50 Chars"],
     },
     price:{
         type:String,
@@ -17,7 +17,7 @@ const ProductSchema = mongoose.Schema({
     discription:{
         type : String,
         required :true,
-        maxLength :[120, "Discription should be less then 120 charecters"]
+        maxLength :[200, "Discription should be less then 200 charecters"]
     },
     
     photos:[

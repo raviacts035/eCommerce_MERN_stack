@@ -1,90 +1,47 @@
 import Product from "../modules/productSchema.js";
-// import formidable from "formidable";
 import asyncHandler from "../service/asyncHandler.js";
-// import { s3FIleUpload, s3DeleteFile } from "../service/imageUploader.js";
 import mongoose from "mongoose";
 import CustomError from "../utils/CustomError.js";
-// import fs from "fs";
-import config from "../config/index.js";
+import cloudinary from "cloudinary";
 
 
 export const addProduct =asyncHandler(async (req,res)=>{
     const productId= new mongoose.Types.ObjectId().toHexString();
-    
-    // const form = formidable({ multiples: true, keepExtensions:true });
-    // form.parse(req, async (err, fields, files) => {
-    //     if(err){
-    //         throw new CustomError("Oops.. Something went wrong",500)
-    //     }
-
-    //     console.log(fields, files);
-
-        // if(!fields.name || !fields.price || !fields.discription ){
-        //         throw new CustomError("Enter all required fields", 500)
-        // }
-        
-    //     // uploading recived files from front-end to AWS bucket
-    //     // AWS uploads will return array of secureUrls of files 
-    //     let imageArrayResponce=Promise.all(
-    //         Object.keys(files).map(async (file, index)=>{
-    //             let element=file[fileKey]
-    //             let data=fs.readFileSync(element.filepath)
-    //             const upload =await s3FIleUpload({
-    //                 bucketName:config.s3_BUCKET_NAME,
-    //                 key: `product/${productId}/image_${index+1}.png`,
-    //                 body: data,
-    //                 contentType: element.mimetype
-    //             })
-                
-    //             return {
-    //                 secure_url: upload.Location
-    //             }
-    //         })
-    //     )
-        
-    //     let imageArray=await imageArrayResponce
-
-        // // creating entry into DATABASE for new product
-        // const product =await Product.create({
-        //     _id: productId,
-        //     name: fields.name,
-        //     price:fields.price,
-        //     discription: fields.discription,
-        //     photos: imageArray,
-        //      sold: 0,
-        // })
-
-        // if (!product){
-        //     throw new CustomError("Unable to create new product entry in DB", 500);
-        // }
-
-        // res.status(200).json({
-        //     success:true ,
-        //     product
-        // })
-    // })
+    console.log("product ID : "+productId)
 
     const { name, price, discription, stock, collectionId} = req.body;
-    if(!name || !price || !discription, !stock, !collectionId ){
+    if(!name || !price || !discription || !stock || !collectionId ){
         throw new CustomError("Enter all required product fields", 500)
     }
 
     let productImages = [];
     if (req.files) {
-        let Images = req.files;
+        console.log("from inside if")
+        let {Images} = req.files;
+        console.log(Images)
         for (const productImage in Images) {
-            console.log(Images[productImage].tempFilePath)
+            // console.log(Images[productImage].tempFilePath)
             let cloudinaryResult = await cloudinary.v2.uploader.upload(Images[productImage].tempFilePath, {
-                folder: `${collectionID}/${productID}`
+                overwrite: true,
+                folder: `${collectionId}/${productId}`
             });
-            console.log(cloudinaryResult);
+            // console.log(cloudinaryResult);
             productImages.push({
                 publicID: cloudinaryResult.public_id,
                 secureURL: cloudinaryResult.secure_url
             })
         }
     }
-
+    console.log({
+        _id: productId,
+        name,
+        price: price,
+        discription: discription,
+        photos: productImages,
+        stock,
+        sold: 0,
+        collectionId,
+    })
     // creating entry into DATABASE for new product
     const product =await Product.create({
         _id: productId,
@@ -112,7 +69,7 @@ export const addProduct =asyncHandler(async (req,res)=>{
 export const updateProduct = asyncHandler(async (req, res) => {
 
     const { name, price, discription, stock, collectionId} = req.body;
-    if(!name || !price || !discription, !stock, !collectionId ){
+    if(!name || !price || !discription || !stock || !collectionId ){
         throw new CustomError("Enter all required fields", 500)
     }
 
@@ -161,8 +118,6 @@ export const updateProduct = asyncHandler(async (req, res) => {
         updatedProduct
     });
 });
-
-
 
 // getProducts 
 export const getProducts =asyncHandler(async (req,res)=>{
@@ -218,7 +173,6 @@ export const getProductsByCollectionId= asyncHandler(async (req, res)=>{
     })
 })
 
-
 export const deleteProduct=asyncHandler(async (req,res)=>{
     let{Id: productId }=req.params;
 
@@ -232,18 +186,6 @@ export const deleteProduct=asyncHandler(async (req,res)=>{
         throw new CustomError("No product found", 404);
     }
 
-    // const deletePhotos=Promise.all(
-    //     productToDelete.photos.map(async (ele, index)=>{
-    //         await s3DeleteFile({
-    //             bucketName: config.s3_BUCKET_NAME,
-    //             key: `product/${productId}/image_${index+1}.png`
-    //         })
-    //     })
-    // )
-    //deleting product photos from AWS
-    // await deletePhotos;
-    
-    //deleting entrys from DATABASE
     productToDelete?.productImages?.map(async (image) => await cloudinary.v2.uploader.destroy(image?.publicID));
 
     res.status(200).json({
