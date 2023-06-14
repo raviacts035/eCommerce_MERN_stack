@@ -1,7 +1,7 @@
 const AuthRoles={
     Admin:"Admin",
     Modirator:"Modirator",
-    User:"USer"
+    User:"User"
 }
 
 export default AuthRoles
