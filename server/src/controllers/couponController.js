@@ -1,6 +1,6 @@
-import Coupon from "../modules/couponSchema";
-import asyncHandler from "../service/asyncHandler";
-import customError from "../utils/CustomError";
+import Coupon from "../modules/couponSchema.js";
+import asyncHandler from "../service/asyncHandler.js";
+import customError from "../utils/CustomError.js";
 
 
 // create coupon, requires -> code && discount

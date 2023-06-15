@@ -56,8 +56,8 @@ export const signUp= asyncHandler(async (req,res)=>{
 export const logIn= asyncHandler(async (req, res)=>{
     // colect credentials 
     const {email, password }= req.body;
-    console.log(req.body)
     // validation
+    console.log(req.body)
     if (!email || !password){
         throw new CustomError("Please enter Credentials",403);
     }
@@ -163,7 +163,7 @@ export const forgotPassword=asyncHandler(async (req, res)=>{
     const frogotToken= await user.generateForgotPasswordToken();
     await user.save({validateBeforeSave:false})
 
-    const resetUrl= `${req.protocol}://${req.get('host')}/api/auth/forgotpassword/${frogotToken}`
+    const resetUrl= `${req.protocol}://${req.get('host')}/api/auth/reset/${frogotToken}`
     let options={
         to : email,
         subject: "Reset Password eCommerce",
@@ -180,7 +180,7 @@ export const forgotPassword=asyncHandler(async (req, res)=>{
     }
 
     try{
-        // await mailHelper(options);
+        await mailHelper(options);
     }
     catch (error)
     {   
@@ -218,7 +218,6 @@ export const resetPassword =asyncHandler(async (req, res)=>{
     })
 
     if (!user){
-        console.log("from inside If")
         throw new CustomError("Reset Link is invalid or Expired",404);
     }
     

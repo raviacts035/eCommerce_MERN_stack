@@ -32,7 +32,7 @@ export const isLogedIn = asyncHandler(async (req,res,next)=>{
 // Authorized Middlewhere, will check role
 
 export const authorized = (...givenRoles)=> asyncHandler((req,res,next)=>{
-    if (!req.user.role){
+    if (!givenRoles.includes(req.user.role)){
         throw new CustomError("You are not authorized to access this resource",200)
     }
     next()
