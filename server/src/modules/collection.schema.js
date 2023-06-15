@@ -3,9 +3,13 @@ import mongoose from "mongoose";
 const collectionSchema=new mongoose.Schema(
     {
       name:{
-        typr: String,
-        require:["true","Please Provide a schema name"],
-        trim:true
+        type :  String,
+        require:[true,"Please Provide a schema name"],
+        trim: true,
+        maxLength : [
+          120,
+          "Collection name should not be more than 120 chars"
+      ]
       }  
     }, {timestamps:true}
 )

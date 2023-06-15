@@ -68,7 +68,7 @@ export const deleteCollection=asyncHandler(async (req,res)=>{
     })
 })
 
-export const getCOllection=asyncHandler(async (req,res)=>{
+export const getCollection=asyncHandler(async (req,res)=>{
     const allCOllection=Collection.find({})
 
     if(!allCOllection){
