@@ -23,7 +23,7 @@ const Login=()=>{
         let data = resp.json()
         console.log(data)
         //redirecting on sucess
-        if(data?.body?.success) redirect("/admin/dashbord")
+        if(data?.body?.success) redirect("/")
     }
 
     // async function handleClick(e){
@@ -43,16 +43,28 @@ const Login=()=>{
     
     
     return (
-        <section>
-        <h2>Login</h2>
-        <form>
-        <h3>Email</h3>
-        <input type="email" name="email" onChange={e=>{setEmail(e.target.value)}} value={email} id="" />
-        <h3>Password</h3>
-        <input type="password" onChange={e=>{setPassword(e.target.value)}} name="password" value={password} id=""/><br/>
-        <input type="submit" onClick={handleClick} value="submit"/>
-        </form>
-        <p>Don't have an account!! <a href="/signup">Signup</a></p>
+        <section className="flex sm:w-[70%] mt-[20vh] mx-auto bg-blue-500 rounded-xl">
+        <div className="sm:w-[59%] text-center">
+            <p>Welcome to Let's Cart Login page...</p>
+        </div>
+        {/* Right Part  */}
+        <div className="sm:w-[40%] m-4 p-4 bg-[#ffff]">
+            <h2 className="text-center my-2">User Login</h2>
+            <form className="flex flex-col items-center gap-5">
+                <div className="my-2">
+                    <h3>Email</h3>
+                    <input className="border-2 border-black" type="email" name="email" onChange={e=>{setEmail(e.target.value)}} value={email} id="" />
+                </div>
+                <div className="my-2">
+                    <h3>Password</h3>
+                    <input className="border-2 border-black" type="password" onChange={e=>{setPassword(e.target.value)}} name="password" value={password} id=""/><br/>
+                </div>
+                <div className="my-2">
+                    <input className="py-1 px-4  text-xl bg-yellow-400 rounded-xl" type="submit" onClick={handleClick} value="submit"/>
+                </div>
+            </form>
+            <p className="text-center my-4">Don't have an account!! <a href="/signup">Signup</a></p>
+        </div>
         </section>
     )
 } 
