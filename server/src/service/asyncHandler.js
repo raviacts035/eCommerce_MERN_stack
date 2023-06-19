@@ -6,6 +6,7 @@ const asyncHandler= (fn) => async (req,res,next)=>{
         await fn(req, res, next)
     }
     catch (error){
+        res.setHeader('Access-Control-Allow-Credentials', true);
         res.status(error.code || 500).json({
             sucess : false,
             message : error.message

@@ -17,7 +17,7 @@ export const cookieOptions={
 export const signUp= asyncHandler(async (req,res)=>{
 
     //collect user details
-    const {name, email, password}=req.body;
+    let {name, email, password, role}=req.body;
 
     // verify recived values
     if (!name || !email || !password){
@@ -29,11 +29,15 @@ export const signUp= asyncHandler(async (req,res)=>{
     if (userExistance){
         throw new CustomError("User Already exists", 500)
     }
+    if(!role){
+        role="USER"
+    };
     // created new entry in DATABASE && db will return all entrys after completion
     const user = await User.create({
         name,
         email,
-        password
+        password,
+        role
     });
 
     user.password=undefined;
@@ -42,6 +46,7 @@ export const signUp= asyncHandler(async (req,res)=>{
     const token = user.getJwtToken();
 
     res.cookie("token",token, cookieOptions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
 
     // Sending Back Responce to user, with selected fields only
     res.status(200).json({
@@ -57,7 +62,7 @@ export const logIn= asyncHandler(async (req, res)=>{
     // colect credentials 
     const {email, password }= req.body;
     // validation
-    console.log(req.body)
+    // console.log(req.body)
     if (!email || !password){
         throw new CustomError("Please enter Credentials",403);
     }
@@ -74,6 +79,7 @@ export const logIn= asyncHandler(async (req, res)=>{
 
         // Sending Back Responce to user, with selected fields only
         res.cookie("token",token, cookieOptions)
+        res.setHeader('Access-Control-Allow-Credentials', true);
 
         return res.status(200).json({
             success :true,
@@ -91,6 +97,7 @@ export const logout=asyncHandler(async (req, res,)=>{
         expires : new Date(Date.now()),
         httpOnly: true
     })
+    res.setHeader('Access-Control-Allow-Credentials', true);
 
     res.status(200).json({
         success:true,
@@ -107,6 +114,9 @@ export const getProfile=asyncHandler(async (req,res)=>{
     if(!user){
         throw new CustomError("User doesn't exist's",404)
     }
+    
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
     res.status(200).json({
         success: true,
         user
@@ -140,6 +150,8 @@ export const deleteUser= asyncHandler(async (req, res)=>{
     if (!deleted){
         throw new CustomError("Unable to delete user account, try again")
     }
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
     return res.status(200).json({
         success :true,
         message: "User account deleted succesfully"
@@ -191,6 +203,8 @@ export const forgotPassword=asyncHandler(async (req, res)=>{
         throw new CustomError("Unable to generate reset mail",500)
 
     }
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
     res.status(200).json({
         success :true,
         message :"Email has been sent with reset password link"
@@ -227,7 +241,7 @@ export const resetPassword =asyncHandler(async (req, res)=>{
     await user.save()
     user.password=undefined;
     const token =await user.getJwtToken()
-
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.cookie("token",token, cookieOptions);
 
     res.status(200).json({

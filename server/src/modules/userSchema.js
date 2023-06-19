@@ -24,7 +24,9 @@ const userSchema= new mongoose.Schema(
         select:false
     },
     role:{
-        type: String
+        type: String,
+        eve:["ADMIN", "USER", "RETAILER"],
+        default: "USER"
     },
     ForgetPasswordToken:String,
     forgotPasswordExpiry:String
