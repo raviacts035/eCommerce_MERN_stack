@@ -27,14 +27,14 @@ const AdminSignin =()=>{
     
     return (
         <section>
-        <h2>Admin Sign Up</h2>
-        <form>
-        <h3>Email</h3>
-        <input type="email" name="email" onChange={e=>{setEmail(e.target.value)}} value={email} id="" />
-        <h3>Password</h3>
-        <input type="password" onChange={e=>{setPassword(e.target.value)}} name="password" value={password} id=""/><br/>
-        <input type="submit" onClick={handleClick} value="submit"/>
-        </form>
+            <h2>Admin Sign Up</h2>
+            <form>
+                <h3>Email</h3>
+                <input type="email" name="email" onChange={e=>{setEmail(e.target.value)}} value={email} id="" />
+                <h3>Password</h3>
+                <input type="password" onChange={e=>{setPassword(e.target.value)}} name="password" value={password} id=""/><br/>
+                <input type="submit" onClick={handleClick} value="submit"/>
+            </form>
         </section>
     )
 }

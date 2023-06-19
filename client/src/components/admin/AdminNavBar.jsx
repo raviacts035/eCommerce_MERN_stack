@@ -1,8 +1,8 @@
 const AdminNavBar= ()=>{
     return (
-        <nav>
-            <h2>Logo</h2>
-            <ul>
+        <nav className="flex justify-between px-20 bg-blue-400 py-4">
+            <h2>Let's Cart</h2>
+            <ul className="flex gap-4 text-xl">
                 <li>Home</li>
                 <li>Collection</li>
                 <li>Orders</li>
