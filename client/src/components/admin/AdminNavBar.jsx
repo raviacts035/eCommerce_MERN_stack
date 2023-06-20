@@ -3,11 +3,11 @@ const AdminNavBar= ()=>{
         <nav className="flex justify-between px-20 bg-blue-400 py-4">
             <h2>Let's Cart</h2>
             <ul className="flex gap-4 text-xl">
-                <li>Home</li>
-                <li>Collection</li>
-                <li>Orders</li>
-                <li>Coupon</li>
-                <li>User</li>
+                <a href="/admin/dashbord"><li>Home</li></a>
+                <a href="/admin/dashbord/collection"><li>Collection</li></a>
+                <a href="/admin/dashbord/order"><li>Orders</li></a>
+                <a href="/admin/dashbord/coupon"><li>Coupon</li></a>
+                <a href="/admin/dashbord/user"><li>User</li></a>
             </ul>
             <a href="/login">
             <button>Login</button>
