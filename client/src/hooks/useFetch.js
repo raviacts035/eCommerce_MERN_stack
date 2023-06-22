@@ -1,15 +1,17 @@
 // Usefull to fetch 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const useFetch=async (url)=>{
+const useFetch=(url)=>{
     const [data,setData]=useState({})
-
-    if (!url) return {}
-
-    let responce=await fetch(url)
-    const json = await responce.json();
-    setData(json)
+    useEffect(()=>{
+        getData(setData)
+    },[]);
     
+    async function getData(setData){
+        let responce=await fetch(url)
+        const json = await responce.json();
+        setData(json)
+    }
     return data 
 }
 

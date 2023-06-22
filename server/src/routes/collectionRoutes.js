@@ -5,7 +5,7 @@ import { createCollection, getCollection, updateCollection, deleteCollection} fr
 
 const collectionRoutes= Router();
 
-collectionRoutes.get("/", isLogedIn, getCollection);
+collectionRoutes.get("/", getCollection);
 collectionRoutes.post("/create/new", createCollection);
 collectionRoutes.post("/update/:id",  updateCollection);
 collectionRoutes.delete("/delete/:id", deleteCollection);

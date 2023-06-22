@@ -1,17 +1,14 @@
-import AdminNavBar from "./AdminNavBar";
 import CardCollection from "./CardCollection";
 import useFetch from "../../hooks/useFetch";
-import { collectio_Dashbord_URL} from "../../utils/index";
+import { collectio_Dashbord_URL, domain_url} from "../../utils/index";
 
 const CollectionDashBord= ()=>{
-    // let data= useFetch(collectio_Dashbord_URL);
-    // let CollectionsList =data?.allCOllection;
-    let CollectionsList=[{
-        name:"Ravi",
-        _id:"id52627"
-    }]
+    // console.log(domain_url+collectio_Dashbord_URL)
+    
+    const data=useFetch(domain_url+collectio_Dashbord_URL);
+    let CollectionsList =data?.allCOllection
 
-    return (!CollectionsList.length)?<div>Loading Collection...</div>: (
+    return (!CollectionsList)?<div>Loading Collection...</div>: (
         <>
             <nav className="flex justify-between px-20 bg-blue-400 py-4 w-full">
                 <a className="border-1 p-2 underline text-lg" href="/admin/dashbord">

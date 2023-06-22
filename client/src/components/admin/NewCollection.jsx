@@ -6,18 +6,20 @@ const NewCollection=()=>{
     
     async function handleSubmit(e){
         e.preventDefault();
-        const resp= await fetch(`http://127.0.0.1:5000/api/collection/create/new`,{
+
+        const collectionData=new FormData()
+        collectionData.set("name",name);
+
+        const resp= await fetch(`http://127.0.0.1:5000/api/collections/create/new`,{
             method:"POST",
-            body: {
-                name:name
-            },
+            body: collectionData,
             credentials: "include",
             mode: "cors",
         })
         let data = resp.json()
-        console.log(data)
+        console.log(resp?.ok)
         //redirecting on sucess
-        if(data?.body?.success) redirect("/")
+        if(data) redirect("/admin/new/collection")
     }
     return (
         <section>

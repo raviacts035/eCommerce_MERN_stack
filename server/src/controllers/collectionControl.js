@@ -69,7 +69,7 @@ export const deleteCollection=asyncHandler(async (req,res)=>{
 })
 
 export const getCollection=asyncHandler(async (req,res)=>{
-    const allCOllection=Collection.find({})
+    const allCOllection=await Collection.find({})
 
     if(!allCOllection){
         throw new CustomError("Collection is Empty",404)
