@@ -27,6 +27,7 @@ app.use(fileUpload({
 
 //Home Route
 app.get("/", (_req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true);
     return res.status(200).json({
         message: "Hello from ravi's eCommerce app"
     })
@@ -46,6 +47,7 @@ app.post("/post/test", (req,res)=>{
 })
 
 app.all("*", (_req,res)=>{
+    res.setHeader('Access-Control-Allow-Credentials', true);
     return res.status(404).json({
         success: false ,
         message : "Unable to find the path requested"

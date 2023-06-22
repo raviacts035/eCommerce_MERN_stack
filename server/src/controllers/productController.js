@@ -32,16 +32,7 @@ export const addProduct =asyncHandler(async (req,res)=>{
             })
         }
     }
-    console.log({
-        _id: productId,
-        name,
-        price: price,
-        discription: discription,
-        photos: productImages,
-        stock,
-        sold: 0,
-        collectionId,
-    })
+    
     // creating entry into DATABASE for new product
     const product =await Product.create({
         _id: productId,
@@ -57,6 +48,7 @@ export const addProduct =asyncHandler(async (req,res)=>{
         throw new CustomError("Unable to create new product entry in DB", 500);
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success:true ,
         product
@@ -111,7 +103,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
         collectionId,
     }, {runValidators: false, new: false});
 
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success: true,
         message: `Product is updated successfully :)`,
@@ -127,6 +119,7 @@ export const getProducts =asyncHandler(async (req,res)=>{
         throw new CustomError("No products avilable", 404)
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success:true,
         products
@@ -147,6 +140,7 @@ export const getProductById =asyncHandler(async (req,res)=>{
         throw new CustomError("No products avilable", 404)
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success:true,
         products
@@ -167,6 +161,7 @@ export const getProductsByCollectionId= asyncHandler(async (req, res)=>{
         throw new CustomError("No products avilable", 404)
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success:true,
         products
@@ -188,6 +183,7 @@ export const deleteProduct=asyncHandler(async (req,res)=>{
 
     productToDelete?.productImages?.map(async (image) => await cloudinary.v2.uploader.destroy(image?.publicID));
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success:true,
         message:"Product deleted sucessfully"

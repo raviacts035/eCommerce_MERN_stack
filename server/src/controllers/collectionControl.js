@@ -4,16 +4,16 @@ import CustomError from "../utils/CustomError.js"
 
 
 export const createCollection=asyncHandler(async (req,res)=>{
-    let {name}=req;
-
+    let {name}=req.body;
     if (!name){
-        throw new CustomError("Collection name is required",402)
+        throw new CustomError("Collection name is required",406)
     }
 
     let newCollection = await Collection.create({
         name
     }) 
-
+    
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess : true,
         newCollection
@@ -22,7 +22,7 @@ export const createCollection=asyncHandler(async (req,res)=>{
 
 
 export const updateCollection=asyncHandler(async (req,res)=>{
-    let {name}=req;
+    let {name}=req.body;
     // collecting ID of the collection to be updated from URL (parameter)
     let {id: collectionId}=req.params;
 
@@ -40,7 +40,7 @@ export const updateCollection=asyncHandler(async (req,res)=>{
     if (!updateCollection){
         throw new CustomError("Collection not found",404)
     }
-
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess : true,
         updatedCollection
@@ -48,12 +48,11 @@ export const updateCollection=asyncHandler(async (req,res)=>{
 })
 
 export const deleteCollection=asyncHandler(async (req,res)=>{
-    let {name}=req;
     // collecting ID of the collection to be updated from URL (parameter)
     let {id: collectionId}=req.params;
 
-    if (!name){
-        throw new CustomError("Collection name is required",402)
+    if (!collectionId){
+        throw new CustomError("Collection id is required",402)
     }
     
     const collectionToDelete=await Collection.findById(collectionId);
@@ -62,6 +61,7 @@ export const deleteCollection=asyncHandler(async (req,res)=>{
     }
     await collectionToDelete.remove()
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess:true,
         message: "Collection deleted Sucessfully"
@@ -74,7 +74,7 @@ export const getCollection=asyncHandler(async (req,res)=>{
     if(!allCOllection){
         throw new CustomError("Collection is Empty",404)
     }
-
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess:true,
         allCOllection,

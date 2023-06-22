@@ -69,6 +69,7 @@ export const generateRazorpayOrderId =asyncHandler(async (req, res)=>{
         throw new customError("");
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success : true,
         message: "Razorpay Order Id generated sucessfully",
@@ -123,6 +124,7 @@ export const generateOrder = asyncHandler(async (req, res)=>{
 
         await productStockUpdate;
 
+        res.setHeader('Access-Control-Allow-Credentials', true);
         res.status(200).json({
             success: true,
             message:"Order Placed succesfully",
@@ -140,6 +142,7 @@ export const getMyOrders= asyncHandler(async (req, res)=>{
     const { _id : user_id}= req.user;
     const allOrders= await Order.find({user: user_id});
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success: true,
         allOrders
@@ -154,6 +157,7 @@ export const getAllOrders= asyncHandler(async (req, res)=>{
 
     const allOrders= await Order.find();
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success: true,
         allOrders
@@ -175,6 +179,7 @@ export const updateOrderStatus =asyncHandler(async (req, res)=>{
         throw new customError("Unable to update Order status",500);
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         success: true,
         message: "Order status Updated sucessfully"

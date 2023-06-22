@@ -16,7 +16,7 @@ export const createCoupon = asyncHandler(async (req, res)=>{
         code,
         discount
     })
-
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess : true,
         message: "Coupon created sucessfully",
@@ -47,6 +47,7 @@ export const updateCoupon=asyncHandler(async (req, res)=>{
         throw new customError("Coupon not found", 404);
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess : true,
         message : "Coupon updated sucessfully"
@@ -66,6 +67,7 @@ export const deleteCoupon=asyncHandler(async (req, res)=>{
         throw new customError("Coupon not found!!", 404)
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess: true,
         message:"Sucessfully deleted coupon"
@@ -80,6 +82,7 @@ export const getCoupon = asyncHandler(async (req, res)=>{
         throw new customError("Coupon list is empty", 302);
     }
 
+    res.setHeader('Access-Control-Allow-Credentials', true);
     res.status(200).json({
         sucess: true,
         coupons

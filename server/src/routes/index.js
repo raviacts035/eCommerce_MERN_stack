@@ -9,6 +9,6 @@ const router = Router();
 router.use("/auth", authRouter);
 router.use("/products", productRouter);
 router.use("/coupon",couponRoutes);
-router.use("collections",collectionRoutes);
+router.use("/collections",collectionRoutes);
 
 export default router
