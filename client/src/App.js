@@ -11,6 +11,9 @@ import OrderDashbord from "./components/admin/OrderDashbord";
 import CouponDashbord from "./components/admin/CouponDashbord";
 import UsersDashbord from "./components/admin/UsersDashbord";
 import NewCollection from "./components/admin/NewCollection";
+import ProductDashbord from "./components/admin/ProductsDashbord";
+import ProductInfo from './components/admin/ProductInfo';
+import NewProduct from './components/admin/NewProduct';
 
 
 function App() {
@@ -68,11 +71,19 @@ export const appRoutes =createBrowserRouter([
   },
   {
     path:"/admin/collection/:id",
-    element:<div>Products of Collection id</div>
+    element:<ProductDashbord/>
   },
   {
     path: "/admin/new/collection",
     element: <NewCollection/>
+  },
+  {
+    path: "admin/product/:id",
+    element: <ProductInfo/>
+  },
+  {
+    path:"/admin/new/Product",
+    element:<NewProduct/>
   }
   
 ])
