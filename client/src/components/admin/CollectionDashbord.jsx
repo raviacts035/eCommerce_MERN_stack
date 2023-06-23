@@ -19,6 +19,7 @@ const CollectionDashBord= ()=>{
                 </a>
             </nav>
             <section className="mx-auto w-[300px] sm:w-[600px] lg:w-[1000px] border-2">
+                <h2>Collection Dashbord</h2>
                 {
                     CollectionsList.map(item => {                    
                         return (

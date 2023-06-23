@@ -82,7 +82,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
         for (const productImage in Images) {
             console.log(Images[productImage].tempFilePath)
             let cloudinaryResult = await cloudinary.v2.uploader.upload(Images[productImage].tempFilePath, {
-                folder: `${collectionID}/${productID}`
+                folder: `${collectionId}/${productID}`
             });
             console.log(cloudinaryResult);
             productImages.push({
@@ -112,7 +112,7 @@ export const updateProduct = asyncHandler(async (req, res) => {
 });
 
 // getProducts 
-export const getProducts =asyncHandler(async (req,res)=>{
+export const getProducts =asyncHandler(async (_req,res)=>{
     const products =await Product.find({});
 
     if(!products){
@@ -134,7 +134,7 @@ export const getProductById =asyncHandler(async (req,res)=>{
         throw new CustomError("Product Id is required", 500)
     }
 
-    const products =Product.findById(productId);
+    const products =await Product.findById(productId);
 
     if(!products){
         throw new CustomError("No products avilable", 404)
@@ -148,14 +148,13 @@ export const getProductById =asyncHandler(async (req,res)=>{
 })
 
 export const getProductsByCollectionId= asyncHandler(async (req, res)=>{
-    let {id:collectionId} =req.params;
-
+    let {Id: collectionId} =req.params;
 
     if(!collectionId){
-        throw new CustomError("Collection ID is required", 500)
+        throw new CustomError("Collection ID is required", 406)
     }
 
-    const products =Product.find({collectionId});
+    const products =await Product.find({collectionId});
 
     if(!products){
         throw new CustomError("No products avilable", 404)
@@ -176,7 +175,7 @@ export const deleteProduct=asyncHandler(async (req,res)=>{
     }
 
     const productToDelete =await Product.findByIdAndDelete(productId);
-    console.log(productToDelete)
+    // console.log(productToDelete)
     if(!productToDelete){
         throw new CustomError("No product found", 404);
     }
