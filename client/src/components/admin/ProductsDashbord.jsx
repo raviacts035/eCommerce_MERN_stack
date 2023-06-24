@@ -1,10 +1,11 @@
 import CardProduct from "./CardProduct";
 import useFetch from "../../hooks/useFetch";
 import { products_by_collection_url, domain_url} from "../../utils/index";
+import { useParams} from "react-router-dom";
 
 const ProductDashbord= ()=>{
     // console.log(domain_url+collectio_Dashbord_URL)
-    const id = "6485620785fd4208794f52c9"
+    const {id} = useParams()
     const data=useFetch(domain_url+products_by_collection_url+id);
     let ProductList =data?.products
     // console.log(ProductList)
@@ -15,7 +16,7 @@ const ProductDashbord= ()=>{
                 <a className="border-1 p-2 underline text-lg" href="/admin/dashbord">
                     <div>Back To Dashbord</div>
                 </a>
-                <a className="border-1 p-2 bg-orange-500 rounded shadow-xl" href="/admin/new/Product">
+                <a className="border-1 p-2 bg-orange-500 rounded shadow-xl" href={"/admin/new/Product/collection/"+id}>
                     <button>New Product</button>
                 </a>
             </nav>
