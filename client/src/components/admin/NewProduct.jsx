@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 
 const NewProduct=()=>{
     const [name,setName]=useState('');
-    // name, price, discription, stock, collectionId;
     const [price, setPrice]=useState(0);
     const [discription,setDiscription]=useState('');
     const [stock,setStock]=useState(0);
@@ -12,7 +11,7 @@ const NewProduct=()=>{
     let files;
     const handleFiles=(e)=>{
         files=e.target.files
-        console.log(files)
+        // console.log(files)
     }
     
     async function handleSubmit(e){
@@ -25,16 +24,17 @@ const NewProduct=()=>{
         productForm.set('discription',discription);
         productForm.set('stock', stock);
         productForm.set('collectionId',collectionId);
-        productForm.set('files',files)
+        for (let file in files){
+            productForm.set(file.name,file)
+        }
         const resp= await fetch(`http://127.0.0.1:5000/api/products/add/new`,{
             method:"POST",
             body: productForm,
             credentials: "include",
             mode: "cors",
         })
-        const data=resp?.product;
         // redirect if product Successfully created 
-        console.log(resp)
+        if(resp?.success) redirect('/admin/dashbord/collection')
     }
     return (
         <section>
@@ -50,19 +50,19 @@ const NewProduct=()=>{
                     <form>
                         <div>
                             <h3>Product name</h3>
-                            <input type="text" onChange={e=>{setName(e.target.value)}} placeholder="name" id="name" value={name} required/>
+                            <input type="text" onChange={e=>{setName(e.target.value)}} placeholder="name" id="name" value={name}/>
                         </div>
                         <div>
                             <h3>Price in rupees</h3>
-                        <input type='number' onChange={e=>{setPrice(e.target.value)}} id="Price" placeholder="Price" required/>
+                        <input type='number' onChange={e=>{setPrice(e.target.value)}} id="Price" placeholder="Price"/>
                         </div>
                         <div>
                             <h3>Product Discription</h3>
-                        <input type="text" onChange={e=>{setDiscription(e.target.value)}} id="Discription" placeholder="Product Discription..." required/>
+                        <input type="text" onChange={e=>{setDiscription(e.target.value)}} id="Discription" placeholder="Product Discription..."/>
                         </div>
                         <div>
                             <h3>Stock </h3>
-                        <input type="number" onChange={e=>{setStock(e.target.value)}} id="stock" placeholder='stock' required/>
+                        <input type="number" onChange={e=>{setStock(e.target.value)}} id="stock" placeholder='stock'/>
                         </div>
                         <div>
                             <h3>Collection ID</h3>

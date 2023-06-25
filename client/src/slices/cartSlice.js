@@ -6,18 +6,18 @@ const cartSlice=createSlice({
         items:[],
     },
     reducers:{
-        addItem:(state,action)=>{
+        addToCart:(state,action)=>{
             state.items.push(action.payload)
         },
         clearCart:(state)=>{
             state.items=[]
         },
-        removeItem:(state,action)=>{
+        removeFromCart:(state,action)=>{
             state.items.pop()
         }
     }
 })
 
-export const {addItem,clearCart,removeItem} =cartSlice.actions;
+export const {addToCart,clearCart,removeFromCart} =cartSlice.actions;
 
 export default cartSlice.reducer;

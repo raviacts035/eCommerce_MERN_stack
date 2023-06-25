@@ -7,7 +7,6 @@ import cloudinary from "cloudinary";
 
 export const addProduct =asyncHandler(async (req,res)=>{
     const productId= new mongoose.Types.ObjectId().toHexString();
-    console.log("product ID : "+productId)
 
     const { name, price, discription, stock, collectionId} = req.body;
     if(!name || !price || !discription || !stock || !collectionId ){
@@ -16,11 +15,11 @@ export const addProduct =asyncHandler(async (req,res)=>{
 
     let productImages = [];
     if (req.files) {
-        console.log("from inside if")
-        let {Images} = req.files;
-        console.log(Images)
-        for (const productImage in Images) {
-            // console.log(Images[productImage].tempFilePath)
+        // console.log("from inside if")
+        let Images = Object.values(req.files);
+        
+        for (let productImage in Images) {
+            console.log(Images[productImage].tempFilePath)
             let cloudinaryResult = await cloudinary.v2.uploader.upload(Images[productImage].tempFilePath, {
                 overwrite: true,
                 folder: `${collectionId}/${productId}`
