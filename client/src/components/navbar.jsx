@@ -1,4 +1,8 @@
+import {useSelector} from 'react-redux';
+import {Link} from 'react-router-dom'
+
 const NavBar= ()=>{
+    const CartItems=useSelector(store=>store.cart.items)    
     return (
         <nav className="sticky top-0 px-20 bg-blue-400 ">
             <div className="flex py-4 w-full justify-between items-center">
@@ -11,10 +15,10 @@ const NavBar= ()=>{
                     <li>Gadgets</li>
                 </ul>
                 <div>
-                    <a href="/cart">Cart (0)</a>
-                    <a href="/login">
-                    <button className="bg-orange-300 p-2">Login</button>
-                    </a>                
+                    <Link to={'/cart'}>Cart ({CartItems.length})</Link>
+                    <Link to={"/login"}>
+                        <button className="bg-orange-300 p-2">Login</button>
+                    </Link>
                 </div>
             </div>
         </nav>

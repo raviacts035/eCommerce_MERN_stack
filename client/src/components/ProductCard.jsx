@@ -6,18 +6,18 @@ const ProductCard = (product) => {
     const dispach=useDispatch()
     const {name, _id, price, stock, discription, photos}=product?.product;
     
-    const handleAddToCart=(id)=>{
-        dispach(addToCart(id))
+    const handleAddToCart=()=>{
+        dispach(addToCart(product?.product))
     }
   return (
     <div
       className="p-2 border-2 rounded-lg w-[250px] h-[340px] bg-blue-200 m-1"
     >
-      <a className="h-[60%] border-2 border-black" href={"/admin/product/" + _id}>
+      <a className=" border-2 border-black" href={"/admin/product/" + _id}>
         {/* upper div */}
-        <div className="h-[100px] w-[100px] p-1">
+        <div className=" p-1">
           {photos.map((photo) => {
-            <img className="w-full h-full" src={photo?.secureURL} alt="image" />;
+            <img className="w-[100px] h-[100px] border-2" src={photo?.secureURL} alt="image" />;
           })}
         </div>
       </a>
