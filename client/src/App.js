@@ -15,6 +15,7 @@ import ProductDashbord from "./components/admin/ProductsDashbord";
 import ProductInfo from './components/admin/ProductInfo';
 import NewProduct from './components/admin/NewProduct';
 import CheckOut from './components/checkout';
+import Orders from './components/Orders';
 
 
 function App() {
@@ -39,6 +40,10 @@ export const appRoutes =createBrowserRouter([
       {
         path:'/cart',
         element: <CheckOut />
+      },
+      {
+        path:'/orders',
+        element:<Orders/>
       }
     ]
   },
