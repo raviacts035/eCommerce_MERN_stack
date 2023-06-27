@@ -1,32 +1,26 @@
 import { useState } from "react";
-import { redirect } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import PostRequest from '../utils/PostRequest';
 
 // import config from "../config/index";
 
 const Login=()=>{
     const [email,setEmail]=useState('');
-    const [password,setPassword]=useState('')
+    const [password,setPassword]=useState('');
+    const [data,setData]=useState();
 
     async function handleClick(e){
         e.preventDefault()
         const loginData=new FormData()
         loginData.set("email",email)
-        loginData.set("password",password)
-        
-        const resp= await fetch(`http://127.0.0.1:5000/api/auth/login`,{
-            method:"POST",
-            body: loginData,
-            credentials: "include",
-            mode: "cors",
-        })
-        let data = resp.json()
-        console.log(data)
-        //redirecting on sucess
-        if(data?.body?.success) redirect("/")
+        loginData.set("password",password)        
+        PostRequest(`http://127.0.0.1:5000/api/auth/login`,loginData,setData)
     }
     
     return (
         <section className="flex sm:w-[70%] mt-[20vh] mx-auto bg-blue-500 rounded-xl">
+            {/* redirecting on sucess */}
+            {data?.success && <Navigate to={'/'}/>}
         <div className="sm:w-[59%] text-center">
             <p>Welcome to Let's Cart Login page...</p>
         </div>

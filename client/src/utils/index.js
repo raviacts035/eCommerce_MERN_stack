@@ -5,6 +5,6 @@ export const product_by_id_url="/api/products/";
 
 export const myorders_url='/api/orders';
 export const allorders_url='/api/orders/all';
-export const generate_paymentid_url='/api/generate/payment_id';
-export const place_order_url='/api/place/new';
-export const update_order_status_url='/api/update/status';
+export const generate_paymentid_url='/api/orders/generate/payment_id';
+export const place_order_url='/api/orders/place/new';
+export const update_order_status_url='/api/orders/update/status';
