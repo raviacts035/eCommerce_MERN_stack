@@ -7,7 +7,7 @@ const authRouter = Router();
 
 authRouter.post("/login", logIn);
 authRouter.post("/signup", signUp)
-authRouter.get("logout", logout);
+authRouter.get("/logout", logout);
 authRouter.get("/password/forgot", forgotPassword);
 authRouter.post("/password/reset/:token", resetPassword);
 authRouter.get("/profile", isLogedIn, getProfile);

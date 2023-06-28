@@ -1,9 +1,9 @@
-import Order from "../modules/orderSchema";
-import Product from "../modules/productSchema";
-import Coupon from "../modules/couponSchema";
-import razorpay from "../config/razorpay.config";
-import asyncHandler from "../service/asyncHandler";
-import customError from "../utils/CustomError";
+import Order from "../modules/orderSchema.js";
+import Product from "../modules/productSchema.js";
+import Coupon from "../modules/couponSchema.js";
+import razorpay from "../config/razorpay.config.js";
+import asyncHandler from "../service/asyncHandler.js";
+import customError from "../utils/CustomError.js";
 
 
 // 1st part of placing order
@@ -79,21 +79,41 @@ export const generateRazorpayOrderId =asyncHandler(async (req, res)=>{
 
 // 2ns part of placing order, generating order with payment ID
 export const generateOrder = asyncHandler(async (req, res)=>{
-    const {transactionId, products, coupon,amount , address, phoneNumber } = req?.body;
-    const user = req?.user;
-    if (!user || !user.email){
-        throw new customError("User are not authorized!!", 403)
-    }
-
-    if (!transactionId ||!products || !products.length==0 || !address || ! phoneNumber || !amount){
+    var {transactionId, products, coupon,amount , address, phoneNumber } = req?.body;
+    // const user = req?.user;
+    // if (!user || !user.email){
+    //     throw new customError("User are not authorized!!", 403)
+    // }
+    products=JSON.parse(products)
+    // console.log(req.body)
+    if (!transactionId || !products || !products.length || !address || !phoneNumber || !amount){
         throw new customError("Insufficient information to generate order",406)
     };
     if (!coupon) coupon=null;
 
+    // Total product price caliculation from DB only
+    amount=0;
+    let priceCalc= Promise.all(
+        products.map(async (product)=>{
+            let productFromDb= await Product.findOne({_id:product.productId})
+            if (!productFromDb){
+                throw new customError(`Product doesn't exist`, 404);
+            }
+            else if(productFromDb.stock < product?.count){
+                throw new customError("Requested amount of stock not avilable",406);
+            }
+            amount+=eval(productFromDb?.price)
+            await productFromDb.save()
+        })
+        )
+
+        await priceCalc;
+
     // verify transaction ID (skipped)
     const newOrder = await Order.create({
         product : products,
-        user: req?.user?._id,
+        // user: req?.user?._id,
+        user:"649a58bd8aeaecbaf6ab15f0",
         phoneNumber,
         address,
         amount,
@@ -105,18 +125,11 @@ export const generateOrder = asyncHandler(async (req, res)=>{
         throw new customError("Something went wrong!!, unable to generate order",500);
     }
         
-    // Total product price caliculation from DB only
+    // stock updation in DB
     let productStockUpdate= Promise.all(
         products.map(async (product)=>{
-            let productFromDb= await Product.findOneById(product._id)
-            if (!productFromDb){
-                throw new customError(`Product ${product?.name} doesn't exist`, 404);
-            }
-            else if(productFromDb.stock < product?.count){
-                throw new customError("Requested amount of stock not avilable",406);
-            }
-
-            productFromDb.stock-=product?.count;
+            let productFromDb= await Product.findOne({_id:product.productId})
+            productFromDb.stock-=eval(product?.count);
             productFromDb.sold+=product?.count;
             await productFromDb.save()
         })
