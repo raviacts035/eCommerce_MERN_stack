@@ -15,26 +15,19 @@ const CheckOut=()=>{
     const [transactionId,setTransactionId]=useState('CASH_ON_DELIVERY');
     // const [totalAmount,setTotalAmount]=useState();
 
-    var OrderProductList =[];
+    var products =[];
     var totalAmount=0;
 
     // form submit handler
     function handleSubmit(e){
         e.preventDefault();
+        products=JSON.stringify(products)
         const orderForm=new FormData();
-        orderForm.set('products',OrderProductList);
+        orderForm.set('products',products);
         orderForm.set('phoneNumber',phone)
         orderForm.set('amount',totalAmount)
         orderForm.set('transactionId',transactionId)
         orderForm.set('address',addr1+addr2+addr3+pincode)
-        console.log(OrderProductList);
-        // let body=JSON.stringify({
-        //     product: OrderProductList,
-        //     phoneNumber: phone,
-        //     amount: totalAmount,
-        //     transactionId: transactionId,
-        //     address: addr1+addr2+addr3+pincode,
-        // })
         PostRequest(domain_url+place_order_url,orderForm,setData)
         return
     }
@@ -45,8 +38,7 @@ const CheckOut=()=>{
             <main className='flex flex-wrap'>
             {   
                 CartItems.map(product=>{
-                    let tmp={productId:product?._id,count:1,price:product?.price}
-                    OrderProductList.push(tmp);
+                    products.push({productId:product?._id,count:1,price:product?.price});
                     totalAmount+=eval(product?.price);
                     return <ProductCard key={CartItems._id} product={product}/>
                 })

@@ -11,14 +11,12 @@ const ProductCard = (product) => {
     }
   return (
     <div
-      className="p-2 border-2 rounded-lg w-[250px] h-[340px] bg-blue-200 m-1"
+      className="p-2 border-2 rounded-lg w-[200px] sm:w-[20vw] h-[400px] bg-grey-200 my-2"
     >
-      <a className=" border-2 border-black" href={"/admin/product/" + _id}>
+      <a className="" href={"/admin/product/" + _id}>
         {/* upper div */}
-        <div className=" p-1">
-          {photos.map((photo) => {
-            <img className="w-[100px] h-[100px] border-2" src={photo?.secureURL} alt="image" />;
-          })}
+        <div className="p-1">
+            <img className="w-[200px] sm:w-[20vw] h-[200px] border-2" src={photos[0]?.secureURL} alt="image" />
         </div>
       </a>
       {/* Lower div  */}
@@ -27,7 +25,7 @@ const ProductCard = (product) => {
           <p className="text-xl font-bold">{name}</p>
           <p className="text-[12px] text-slate-400">{discription}</p>
         </div>
-        <div className="border-1 bg-blue-200">
+        <div className="border-1">
           <h3 className="text-lg">Price</h3>
           <p className="text-black">Rs.{price}</p>
         </div>

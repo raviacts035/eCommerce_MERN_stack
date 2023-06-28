@@ -16,6 +16,7 @@ import ProductInfo from './components/admin/ProductInfo';
 import NewProduct from './components/admin/NewProduct';
 import CheckOut from './components/checkout';
 import Orders from './components/Orders';
+import MyProfile from './components/MyProfile';
 
 
 function App() {
@@ -44,6 +45,10 @@ export const appRoutes =createBrowserRouter([
       {
         path:'/orders',
         element:<Orders/>
+      },
+      {
+        path:'/myprofile',
+        element:<MyProfile/>
       }
     ]
   },
