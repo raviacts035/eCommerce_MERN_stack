@@ -12,14 +12,15 @@ const NavBar= ()=>{
                 </div>
                 <div className='flex items-center'>
                     <input type="text" className='w-[30vw] h-10 mx-2 border-2 border-grey-200 rounded-xl px-2 py-2 bg-grey-400' placeholder='Search'/>
-                    <button className='rounded-xl bg-green-800 text-white px-[4vw] py-2 shadow-lg hover:shadow-xl'>search</button>
+                    <button className='rounded-[50px] bg-green-800 text-white px-[4vw] py-2 shadow-lg hover:shadow-xl'>search</button>
                 </div>
+                {/* login or user icons */}
                 <div className='flex gap-3 items-center'>
-                    <Link className="shadow-lg hover:shadow-xl px-[2vw] py-2 rounded-xl border-2 border-grey-200" to={'/cart'}>Cart ({CartItems.length})</Link>
+                    <Link className="shadow-lg hover:shadow-xl px-[2vw] py-2 rounded-[50px] border-2 border-grey-200" to={'/cart'}>Cart ({CartItems.length})</Link>
                     {
                     (!UserData.isLoggedIn)?
                     <Link to={"/login"}>
-                        <button className="shadow-lg hover:shadow-xl px-[2vw] py-2 rounded-xl border-2 border-grey-200">Login</button>
+                        <button className="shadow-lg hover:shadow-xl px-[2vw] py-2 rounded-[50px] border-2 border-grey-200">Login</button>
                     </Link>:
                     <Link to={'/myprofile'}>
                         <p>Hello {UserData?.data?.name}</p>

@@ -11,27 +11,24 @@ const ProductCard = (product) => {
     }
   return (
     <div
-      className="p-2 border-2 rounded-lg w-[200px] sm:w-[20vw] h-[400px] bg-grey-200 my-2"
+      className="rounded-xl w-[200px] sm:w-[18vw] h-[350px] my-2"
     >
-      <a className="" href={"/admin/product/" + _id}>
+      <a href={"/admin/product/" + _id}>
         {/* upper div */}
-        <div className="p-1">
-            <img className="w-[200px] sm:w-[20vw] h-[200px] border-2" src={photos[0]?.secureURL} alt="image" />
+        <div className="h-[65%] overflow-hidden duration-500 rounded-xl hover:scale-[1.15] bg-[#f5f6f6]">
+            <img className="w-full h-[200px]" src={photos[0]?.secureURL} alt="image" />
         </div>
       </a>
       {/* Lower div  */}
-      <div className="h-[40%]">
-        <div className="flex flex-col py-2">
-          <p className="text-xl font-bold">{name}</p>
-          <p className="text-[12px] text-slate-400">{discription}</p>
+      <div className=" flex justify-between flex-col h-[35%]">
+        <div className="flex justify-between py-2">
+          <p className="text-[20px] font-bold">{name}</p>
+          <p className="text-[12px] font-bold">Rs. <span className="text-black  text-[22px]">{price}</span>.00</p>
         </div>
-        <div className="border-1">
-          <h3 className="text-lg">Price</h3>
-          <p className="text-black">Rs.{price}</p>
-        </div>
+        <p className="text-[12px] text-slate-400">{discription}</p>
         {/* buttons */}
         <div>
-          <button onClick={()=>{handleAddToCart(product.product)}} className="px-4 py-2 rounded-lg bg-red-400">Add to Cart</button>
+          <button onClick={()=>{handleAddToCart(product.product)}} className="duration-500 hover:bg-green-800 hover:text-white px-4 py-2 rounded-[50px] border-2">Add to Cart</button>
         </div>
       </div>
     </div>
