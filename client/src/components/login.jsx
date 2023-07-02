@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import PostRequest from '../utils/PostRequest';
 import {domain_url, signin_url} from '../utils/index';
 import {useDispatch} from 'react-redux';
 import { login_user, SetAuthToken} from '../slices/userSlice';
@@ -10,7 +9,6 @@ import { login_user, SetAuthToken} from '../slices/userSlice';
 const Login=()=>{
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
-    const [data,setData]=useState();
     const [ready,setReady]=useState(false);
     const dispatch=useDispatch();
 
@@ -19,7 +17,13 @@ const Login=()=>{
         const loginData=new FormData()
         loginData.set("email",email)
         loginData.set("password",password)     
-        PostRequest(domain_url+signin_url,loginData,setData)
+        const responce= await fetch(domain_url+signin_url,{
+            method:"POST",
+            body: loginData,
+            credentials: "include",
+            mode: "cors",
+        })
+        const data = await responce.json();
 
         if (data?.success && data?.token){
             dispatch(SetAuthToken(data.token))

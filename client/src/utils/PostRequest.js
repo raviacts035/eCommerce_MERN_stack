@@ -1,9 +1,4 @@
-import { useSelector } from "react-redux";
-
-async function PostRequest(url, body,fn){
-    const UserData=useSelector(store=>store.user);
-    const {token}=UserData
-
+async function PostRequest(url, body,token,fn){
     const responce= await fetch(url,{
         method:"POST",
         headers:{

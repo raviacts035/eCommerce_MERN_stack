@@ -2,6 +2,7 @@ import {useSelector} from 'react-redux';
 import ProductCard from '../components/ProductCard';
 import { useState } from 'react';
 import PostRequest from '../utils/PostRequest';
+import useAuthToken from '../hooks/useAuthToken';
 import { place_order_url,domain_url} from '../utils/index';
 
 const CheckOut=()=>{
@@ -12,6 +13,7 @@ const CheckOut=()=>{
     const [addr3,setAddr3]=useState('');
     const [pincode,setPinCode]=useState();
     const [phone,setPhone]=useState();
+    const token=useAuthToken();
     const [transactionId,setTransactionId]=useState('CASH_ON_DELIVERY');
     // const [totalAmount,setTotalAmount]=useState();
 
@@ -28,7 +30,7 @@ const CheckOut=()=>{
         orderForm.set('amount',totalAmount)
         orderForm.set('transactionId',transactionId)
         orderForm.set('address',addr1+addr2+addr3+pincode)
-        PostRequest(domain_url+place_order_url,orderForm,setData)
+        PostRequest(domain_url+place_order_url,orderForm,token,setData)
         return
     }
     return (
