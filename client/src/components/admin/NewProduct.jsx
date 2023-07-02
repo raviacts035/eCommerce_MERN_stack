@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { redirect, useParams } from "react-router-dom";
+import useAuthToken from "../../hooks/useAuthToken";
+import { domain_url} from '../../utils/index'
+import PostRequest from "../../utils/PostRequest";
 
 const NewProduct=()=>{
     const [name,setName]=useState('');
@@ -7,11 +10,12 @@ const NewProduct=()=>{
     const [discription,setDiscription]=useState('');
     const [stock,setStock]=useState(0);
     const {id:collectionId}=useParams();
+    const [data,setData]=useState();
+    const token=useAuthToken();
 
     let files;
     const handleFiles=(e)=>{
         files=e.target.files
-        // console.log(files)
     }
     
     async function handleSubmit(e){
@@ -24,17 +28,13 @@ const NewProduct=()=>{
         productForm.set('discription',discription);
         productForm.set('stock', stock);
         productForm.set('collectionId',collectionId);
-        for (let file in files){
-            productForm.set(file.name,file)
+        for (let index=0; index< files['length'];index++){
+            // console.log(files[index])
+            productForm.set(files[index].name,files[index])
         }
-        const resp= await fetch(`http://127.0.0.1:5000/api/products/add/new`,{
-            method:"POST",
-            body: productForm,
-            credentials: "include",
-            mode: "cors",
-        })
-        // redirect if product Successfully created 
-        if(resp?.success) redirect('/admin/dashbord/collection')
+        PostRequest(domain_url+`/api/products/add/new`,productForm,token,setData)
+        // redirect if product Successfully created
+        if(data?.success) redirect('/admin/dashbord/collection')
     }
     return (
         <section>
@@ -71,9 +71,9 @@ const NewProduct=()=>{
                         {!collectionId && <div>Collection Id is missing!</div>}
                         <div>
                             <h3>Product Images's (4)</h3>
-                            <input type="file" name="photos" onChange={e=>{handleFiles(e)}} id="files" required multiple/>
+                            <input type="file" multiple name="photos" onChange={e=>{handleFiles(e)}} id="files" required/>
                         </div>
-                        <input type="submit" onClick={e=>{handleSubmit(e)}} value="Create New"/>
+                        <button  type="submit" onClick={e=>{handleSubmit(e)}} className="duration-400 hover:bg-yellow-400 hover:text-white px-4 py-2 rounded-[50px] border-2">Create New</button>
                     </form>
                 </div>
             </div>

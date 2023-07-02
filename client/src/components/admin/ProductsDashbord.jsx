@@ -1,7 +1,7 @@
 import CardProduct from "./CardProduct";
 import useFetch from "../../hooks/useFetch";
 import { products_by_collection_url, domain_url} from "../../utils/index";
-import { useParams} from "react-router-dom";
+import { Link, useParams} from "react-router-dom";
 
 const ProductDashbord= ()=>{
     // console.log(domain_url+collectio_Dashbord_URL)
@@ -13,23 +13,25 @@ const ProductDashbord= ()=>{
     return (!ProductList)?<div>Loading List of Products...</div>: (
         <>
             <nav className="flex justify-between px-20 bg-blue-400 py-4 w-full">
-                <a className="border-1 p-2 underline text-lg" href="/admin/dashbord">
+                <Link className="border-1 p-2 underline text-lg" to={"/admin/dashbord"}>
                     <div>Back To Dashbord</div>
-                </a>
-                <a className="border-1 p-2 bg-orange-500 rounded shadow-xl" href={"/admin/new/Product/collection/"+id}>
+                </Link>
+                <Link className="border-1 p-2 bg-orange-500 rounded shadow-xl" to={"/admin/new/Product/collection/"+id}>
                     <button>New Product</button>
-                </a>
+                </Link>
             </nav>
-            <section className="mx-auto w-[300px] sm:w-[600px] lg:w-[1000px] border-2">
-                <h2>Products under Collection</h2>
-                {
-                    ProductList.map(item => {                 
-                        return (
-                            <CardProduct {...item}/>
-                        )
-                    })
-                }
-                {/* <CardProduct {...item}/> */}
+                <hr />
+            <section className="mx-auto w-[300px] sm:w-[600px] lg:w-[1000px]">
+                <h2>Products under Collection ID : {id}</h2>
+                <article className="flex gap-6">
+                    {
+                        ProductList.map(product => {                 
+                            return (
+                                <CardProduct key={product._id} product={product}/>
+                            )
+                        })
+                    }
+                </article>
             </section>
         </>
     )
