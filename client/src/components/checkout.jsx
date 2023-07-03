@@ -1,9 +1,11 @@
 import {useSelector} from 'react-redux';
-import ProductCard from '../components/ProductCard';
+import MiniProductCard from '../components/MiniProductCard';
 import { useState } from 'react';
 import PostRequest from '../utils/PostRequest';
 import useAuthToken from '../hooks/useAuthToken';
 import { place_order_url,domain_url} from '../utils/index';
+import { useDispatch } from "react-redux";
+import { clearCart} from '../slices/cartSlice';
 
 const CheckOut=()=>{
     const CartItems=useSelector(store=>store.cart.items);
@@ -14,16 +16,16 @@ const CheckOut=()=>{
     const [pincode,setPinCode]=useState();
     const [phone,setPhone]=useState();
     const token=useAuthToken();
+    const dispach=useDispatch()
     const [transactionId,setTransactionId]=useState('CASH_ON_DELIVERY');
     // const [totalAmount,setTotalAmount]=useState();
-
-    var products =[];
+    let products;
     var totalAmount=0;
 
     // form submit handler
     function handleSubmit(e){
         e.preventDefault();
-        products=JSON.stringify(products)
+        products=JSON.stringify(CartItems)
         const orderForm=new FormData();
         orderForm.set('products',products);
         orderForm.set('phoneNumber',phone)
@@ -33,21 +35,32 @@ const CheckOut=()=>{
         PostRequest(domain_url+place_order_url,orderForm,token,setData)
         return
     }
+
+    const handleClearCart=()=>{
+        dispach(clearCart())
+    }
     return (
         <section>
-            <div>Cart</div>
+            <div className='w-full py-2 px-4 text-[22px] bg-orange-200 font-bold'>Cart</div>
             {/* {CartItems.length && <div>cart is empty</div>} */}
             <main className='flex flex-wrap'>
             {   
-                CartItems.map(product=>{
+                CartItems.map(item=>{
+                    totalAmount+=eval(item?.price);
+                    return <MiniProductCard key={item?.productId} {...item}/>
+                })
+            }
+            {/* {
+                product=>{
                     products.push({productId:product?._id,count:1,price:product?.price});
                     totalAmount+=eval(product?.price);
                     return <ProductCard key={CartItems._id} product={product}/>
-                })
-            }
+                }
+            } */}
             <div>
                 <h3>Total Cart Price</h3>
                 <p>Rs.{totalAmount}</p>
+                <button onClick={()=>{handleClearCart()}} >Clear Cart</button>
             </div>
             </main>
             <form className='my-4 p-2 border-2 border-black'>

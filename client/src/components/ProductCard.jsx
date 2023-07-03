@@ -2,24 +2,31 @@ import { addToCart } from "../slices/cartSlice";
 import { addToWishlist, removeFromWishlist } from "../slices/wishList";
 import star from '../assets/green_star.svg'
 import { useDispatch } from "react-redux";
+import { Link} from 'react-router-dom';
 
 const ProductCard = (product) => {
     const dispach=useDispatch()
     const {name, _id, price, stock, discription, photos}=product?.product;
     
     const handleAddToCart=()=>{
-        dispach(addToCart(product?.product))
+        dispach(addToCart({
+          secureURL:photos[0]?.secureURL,
+          name,
+          productId:_id,
+          count:1,
+          price
+        }))
     }
   return (
     <div
       className="rounded-xl w-[250px] h-[380px] my-2"
     >
-      <a href={"/admin/product/" + _id}>
+      <Link to={"/admin/product/" + _id}>
         {/* upper div */}
         <div className="h-[60%] overflow-hidden duration-500 rounded-xl hover:scale-[1.15] bg-[#f5f6f6]">
             <img className="mx-auto h-full" src={photos[0]?.secureURL} alt="image" />
         </div>
-      </a>
+      </Link>
       {/* Lower div  */}
       <div className=" flex justify-between flex-col h-[40%]">
         <div className="flex justify-between py-2">
