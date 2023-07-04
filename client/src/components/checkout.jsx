@@ -6,6 +6,7 @@ import useAuthToken from '../hooks/useAuthToken';
 import { place_order_url,domain_url} from '../utils/index';
 import { useDispatch } from "react-redux";
 import { clearCart} from '../slices/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CheckOut=()=>{
     const CartItems=useSelector(store=>store.cart.items);
@@ -16,15 +17,22 @@ const CheckOut=()=>{
     const [pincode,setPinCode]=useState();
     const [phone,setPhone]=useState();
     const token=useAuthToken();
+    const naviaget =useNavigate();
     const dispach=useDispatch()
     const [transactionId,setTransactionId]=useState('CASH_ON_DELIVERY');
-    // const [totalAmount,setTotalAmount]=useState();
+
     let products;
     var totalAmount=0;
 
     // form submit handler
     function handleSubmit(e){
         e.preventDefault();
+
+        //unauthorized redirect
+        if (!token){
+             return naviaget('/login');
+        }
+        
         products=JSON.stringify(CartItems)
         const orderForm=new FormData();
         orderForm.set('products',products);
@@ -33,6 +41,7 @@ const CheckOut=()=>{
         orderForm.set('transactionId',transactionId)
         orderForm.set('address',addr1+addr2+addr3+pincode)
         PostRequest(domain_url+place_order_url,orderForm,token,setData)
+        if (data?.success) naviaget('/orders')
         return
     }
 
@@ -46,17 +55,11 @@ const CheckOut=()=>{
             <main className='flex flex-wrap'>
             {   
                 CartItems.map(item=>{
-                    totalAmount+=eval(item?.price);
+                    totalAmount+=item?.count*(eval(item?.price));
                     return <MiniProductCard key={item?.productId} {...item}/>
                 })
             }
-            {/* {
-                product=>{
-                    products.push({productId:product?._id,count:1,price:product?.price});
-                    totalAmount+=eval(product?.price);
-                    return <ProductCard key={CartItems._id} product={product}/>
-                }
-            } */}
+
             <div>
                 <h3>Total Cart Price</h3>
                 <p>Rs.{totalAmount}</p>
