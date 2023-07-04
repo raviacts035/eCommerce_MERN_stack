@@ -8,7 +8,6 @@ const cartSlice=createSlice({
     reducers:{
         addToCart:(state,action)=>{
             const itemIndex=state.items.findIndex(item=>item.productId===action.payload?.productId);
-            console.log(itemIndex)
             if (itemIndex>=0) {
                 state.items[itemIndex].count+=1;
             }
