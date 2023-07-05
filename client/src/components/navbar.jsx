@@ -5,10 +5,10 @@ const NavBar= ()=>{
     const CartItems=useSelector(store=>store.cart.items)
     const UserData=useSelector(store=>store.user);
     return (
-        <nav className="sticky top-0 px-20 bg-white">
+        <nav className="sticky top-0 w-[90vw] m-auto bg-white">
             <div className="flex py-4 w-full justify-between items-start">
                 <div>
-                <Link to={"/"}><p className="text-green-800 p-1 text-3xl font-bold">Let's Cart</p></Link>
+                <Link to={"/"}><p className="text-green-800 p-2 text-3xl bg-orange-400 font-bold">Slipkart</p></Link>
                 </div>
                 
                 {/* login or user icons */}

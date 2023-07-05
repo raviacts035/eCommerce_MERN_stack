@@ -1,17 +1,20 @@
+import {Link} from 'react-router-dom'
+
+
 const AdminNavBar= ()=>{
     return (
-        <nav className="flex justify-between px-20 bg-blue-400 py-4">
-            <h2>Let's Cart</h2>
-            <ul className="flex gap-4 text-xl">
-                <a href="/admin/dashbord"><li>Home</li></a>
-                <a href="/admin/dashbord/collection"><li>Collection</li></a>
-                <a href="/admin/dashbord/order"><li>Orders</li></a>
-                <a href="/admin/dashbord/coupon"><li>Coupon</li></a>
-                <a href="/admin/dashbord/user"><li>User</li></a>
-            </ul>
-            <a href="/login">
-            <button>Login</button>
-            </a>
+        <nav className="sticky top-0 w-[90vw] m-auto bg-white">
+            <div className="flex py-4 w-full justify-between items-center">
+                <Link to={"/"}><p className="text-green-800 p-2 text-3xl bg-orange-400 font-bold">Slipkart</p></Link>
+                <ul className="flex gap-4 text-xl">
+                    <Link to={"/admin/dashbord"}><p className='underline'>Home</p></Link>
+                    <Link to={"/admin/dashbord/collection"}><p className='underline'>Collection</p></Link>
+                    <Link to={"/admin/dashbord/order"}><p className='underline'>Orders</p></Link>
+                    <Link to={"/admin/dashbord/coupon"}><p className='underline'>Coupon</p></Link>
+                    <Link to={"/admin/dashbord/user"}><p className='underline'>User</p></Link>
+                </ul>
+            </div>
+            <hr />
         </nav>
     )
 }

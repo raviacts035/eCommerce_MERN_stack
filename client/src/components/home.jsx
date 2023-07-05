@@ -23,7 +23,7 @@ const Home= ()=>{
     // console.log(filteredList)
     return (!filteredList)? <div>Shimmer Ui</div> :(
         <main className='w-[90vw] m-auto'>
-        <div className='flex items-center w-fit sticky top-4 my-4 mx-auto'>
+        <div className='flex items-center bg-white w-[200px] sm:w-fit lg:sticky top-4 my-4 mx-auto'>
             <input type="text" onChange={(event)=>{setSearchText(event.target.value)}} value={searchText} className='w-[30vw] h-10 mx-2 border-2 border-grey-200 rounded-xl px-2 py-2 bg-grey-400' placeholder='Search'/>
             <button className='rounded-[50px] bg-green-800 text-white px-[4vw] py-2 shadow-lg hover:shadow-xl'>search</button>
         </div>
