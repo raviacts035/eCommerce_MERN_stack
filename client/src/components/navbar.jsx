@@ -10,10 +10,7 @@ const NavBar= ()=>{
                 <div>
                 <Link to={"/"}><p className="text-green-800 p-1 text-3xl font-bold">Let's Cart</p></Link>
                 </div>
-                <div className='flex items-center'>
-                    <input type="text" className='w-[30vw] h-10 mx-2 border-2 border-grey-200 rounded-xl px-2 py-2 bg-grey-400' placeholder='Search'/>
-                    <button className='rounded-[50px] bg-green-800 text-white px-[4vw] py-2 shadow-lg hover:shadow-xl'>search</button>
-                </div>
+                
                 {/* login or user icons */}
                 <div className='flex gap-3 items-baseline'>
                     <Link className="shadow-lg hover:shadow-xl px-[2vw] py-2 rounded-[50px] border-2 border-grey-200" to={'/cart'}>Cart ({CartItems.length})</Link>
