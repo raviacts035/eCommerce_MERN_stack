@@ -6,6 +6,7 @@ export const collectio_Dashbord_URL="/api/collections";
 // Product API's
 export const products_by_collection_url ="/api/products/collection/";
 export const product_by_id_url="/api/products/";
+export const delete_product_by_id="/api/products/delete/"
 
 // Order API's
 export const myorders_url='/api/orders';

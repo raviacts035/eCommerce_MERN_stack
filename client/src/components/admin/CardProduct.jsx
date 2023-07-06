@@ -1,4 +1,5 @@
 import {Link } from 'react-router-dom';
+import DelProductDialog from './delProductDialog';
 
 
 const CardProduct = (product) => {
@@ -14,7 +15,7 @@ const CardProduct = (product) => {
       <Link to={"/admin/product/" + _id}>
         {/* upper div */}
         <div className="h-[65%] overflow-hidden duration-500 rounded-xl hover:scale-[1.15] bg-[#f5f6f6]">
-            <img className="h-[200px]" src={photos[0]?.secureURL} alt="image" />
+            <img className="h-[200px] mx-auto" src={photos[0]?.secureURL} alt="image" />
         </div>
       </Link>
       {/* Lower div  */}
@@ -25,10 +26,16 @@ const CardProduct = (product) => {
         </div>
         <p className="text-[12px] text-slate-400">{discription}</p>
         {/* buttons */}
-        <Link to={'#'}>
-          <button className="duration-400 hover:bg-yellow-400 hover:text-white px-4 py-2 rounded-[50px] border-2">Edit</button>
-        </Link>
+        <div className='flex justify-around items-center'>
+          <Link to={`/admin/update/product/${ _id}`}>
+            <button className="duration-400 hover:bg-yellow-400 hover:text-white px-4 py-2 rounded-[50px] border-2">Edit</button>
+          </Link>
+          <button className="duration-400 hover:bg-red-400 hover:text-white px-4 py-2 rounded-[50px] border-2">delete</button>
+        </div>
       </div>
+        {
+          <DelProductDialog {...product}/>
+        }
     </div>
   );
 };
