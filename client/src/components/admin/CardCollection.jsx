@@ -12,9 +12,6 @@ const CardCollection=({name="Example Collection", _id="Id1234"})=>{
                     <p>{"id : "+_id}</p>
                 </div>
             </Link>
-            <div className='invisible group-hover:visible'>
-                <button>edit</button>
-            </div>
         </article>
     )
 }

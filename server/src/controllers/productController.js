@@ -19,7 +19,6 @@ export const addProduct =asyncHandler(async (req,res)=>{
         let Images = Object.values(req.files);
         
         for (let productImage in Images) {
-            console.log(Images[productImage].tempFilePath)
             let cloudinaryResult = await cloudinary.v2.uploader.upload(Images[productImage].tempFilePath, {
                 overwrite: true,
                 folder: `${collectionId}/${productId}`

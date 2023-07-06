@@ -6,9 +6,9 @@ import { createCollection, getCollection, updateCollection, deleteCollection} fr
 const collectionRoutes= Router();
 
 collectionRoutes.get("/", getCollection);
-collectionRoutes.post("/create/new", createCollection);
-collectionRoutes.post("/update/:id",  updateCollection);
-collectionRoutes.delete("/delete/:id", deleteCollection);
+collectionRoutes.post("/create/new", isLogedIn, authorized(AuthRoles.Admin),createCollection);
+collectionRoutes.post("/update/:id", isLogedIn, authorized(AuthRoles.Admin), updateCollection);
+collectionRoutes.delete("/delete/:id",isLogedIn, authorized(AuthRoles.Admin), deleteCollection);
 
 
 export default collectionRoutes;

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { redirect, useParams } from "react-router-dom";
+import { useParams, Link,useNavigate } from "react-router-dom";
 import useAuthToken from "../../hooks/useAuthToken";
 import { domain_url} from '../../utils/index'
 import PostRequest from "../../utils/PostRequest";
@@ -12,6 +12,7 @@ const NewProduct=()=>{
     const {id:collectionId}=useParams();
     const [data,setData]=useState();
     const token=useAuthToken();
+    const navigate=useNavigate()
 
     let files;
     const handleFiles=(e)=>{
@@ -34,15 +35,17 @@ const NewProduct=()=>{
         }
         PostRequest(domain_url+`/api/products/add/new`,productForm,token,setData)
         // redirect if product Successfully created
-        if(data?.success) redirect('/admin/dashbord/collection')
+        if(data?.success) navigate('/admin/dashbord/collection')
     }
     return (
         <section>
             <nav className="flex justify-between px-20 bg-blue-400 py-4 w-full">
-                <a className="border-1 p-2 underline text-lg" href="/admin/dashbord">
+                <Link className="border-1 p-2 underline text-lg" to={"/admin/dashbord"}>
                     <div>Back To Dashbord</div>
-                </a>
-                <button>Cancel</button>
+                </Link>
+                <Link to={'/admin/dashbord/products'}>
+                    <button>Cancel</button>
+                </Link>
             </nav>
             <div>
                 <h2>Create New Product</h2>

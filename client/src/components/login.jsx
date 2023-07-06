@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {domain_url, signin_url} from '../utils/index';
 import {useDispatch} from 'react-redux';
 import { login_user, SetAuthToken} from '../slices/userSlice';
@@ -9,8 +9,8 @@ import { login_user, SetAuthToken} from '../slices/userSlice';
 const Login=()=>{
     const [email,setEmail]=useState('');
     const [password,setPassword]=useState('');
-    const [ready,setReady]=useState(false);
     const dispatch=useDispatch();
+    const navigate=useNavigate()
 
     async function handleClick(e){
         e.preventDefault()
@@ -28,14 +28,13 @@ const Login=()=>{
         if (data?.success && data?.token){
             dispatch(SetAuthToken(data.token))
             dispatch(login_user(data.user))
-            setReady(true)
+            if(data.user?.role==='ADMIN') return navigate('/admin/dashbord');
+            navigate('/')
         }
     }
     
     return (
         <section className="flex sm:w-[70%] mt-[20vh] mx-auto bg-blue-500 rounded-xl">
-            {/* redirecting on sucess */}
-            {ready && <Navigate to={'/'}/>}
         <div className="sm:w-[59%] text-center">
             <p>Welcome to Let's Cart Login page...</p>
         </div>

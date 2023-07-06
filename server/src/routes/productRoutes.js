@@ -8,9 +8,9 @@ const productRouter= Router();
 productRouter.get("/",getProducts);
 productRouter.get("/:Id",getProductById);
 productRouter.get("/collection/:Id",getProductsByCollectionId);
-productRouter.post("/add/new",addProduct);
+productRouter.post("/add/new",isLogedIn,addProduct);
 productRouter.post("/update/:Id", isLogedIn,updateProduct);
-productRouter.post("/delete/:Id", isLogedIn,deleteProduct);
+productRouter.get("/delete/:Id", isLogedIn,deleteProduct);
 
 
 
